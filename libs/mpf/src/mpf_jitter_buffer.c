@@ -19,7 +19,6 @@
 
 #if 1 == 1
 
-jbdie1
 #define JB_TRACE(msg, args...) \
   apt_log(MPF_LOG_MARK, APT_PRIO_INFO, msg, ##args);
 

@@ -38,7 +38,6 @@
 
 #if 1 == 1
 
-rtpdie1
 #define RTP_TRACE(msg, args...) \
   apt_log(MPF_LOG_MARK, APT_PRIO_INFO, msg, ##args);
 
