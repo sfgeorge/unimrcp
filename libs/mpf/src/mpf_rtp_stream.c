@@ -37,7 +37,10 @@
 #define RTCP_BYE_TALKSPURT_ENDED "Talskpurt ended"
 
 #if 1 == 1
-#define RTP_TRACE printf
+
+#define RTP_TRACE(msg, args...) \
+  apt_log(MPF_LOG_MARK, APT_PRIO_INFO, msg, ##args);
+
 #elif ENABLE_RTP_PACKET_TRACE == 2
 #define RTP_TRACE mpf_debug_output_trace
 #else

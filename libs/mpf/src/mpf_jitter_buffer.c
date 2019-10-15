@@ -18,7 +18,10 @@
 #include "mpf_trace.h"
 
 #if 1 == 1
-#define JB_TRACE printf
+
+#define JB_TRACE(msg, args...) \
+  apt_log(MPF_LOG_MARK, APT_PRIO_INFO, msg, ##args);
+
 #elif ENABLE_JB_TRACE == 2
 #define JB_TRACE mpf_debug_output_trace
 #else
