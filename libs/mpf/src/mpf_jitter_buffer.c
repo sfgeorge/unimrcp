@@ -17,7 +17,7 @@
 #include "mpf_jitter_buffer.h"
 #include "mpf_trace.h"
 
-#if ENABLE_JB_TRACE == 1
+#if 1 == 1
 #define JB_TRACE printf
 #elif ENABLE_JB_TRACE == 2
 #define JB_TRACE mpf_debug_output_trace

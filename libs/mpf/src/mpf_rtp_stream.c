@@ -36,7 +36,7 @@
 #define RTCP_BYE_SESSION_ENDED "Session ended"
 #define RTCP_BYE_TALKSPURT_ENDED "Talskpurt ended"
 
-#if ENABLE_RTP_PACKET_TRACE == 1
+#if 1 == 1
 #define RTP_TRACE printf
 #elif ENABLE_RTP_PACKET_TRACE == 2
 #define RTP_TRACE mpf_debug_output_trace
