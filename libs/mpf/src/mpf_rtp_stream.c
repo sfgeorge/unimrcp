@@ -43,10 +43,8 @@ rtpdie1
   apt_log(MPF_LOG_MARK, APT_PRIO_INFO, msg, ##args);
 
 #elif ENABLE_RTP_PACKET_TRACE == 2
-rtpdie2
 #define RTP_TRACE mpf_debug_output_trace
 #else
-rtpdie3
 #define RTP_TRACE mpf_null_trace
 #endif
 

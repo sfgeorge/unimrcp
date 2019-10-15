@@ -24,10 +24,8 @@ jbdie1
   apt_log(MPF_LOG_MARK, APT_PRIO_INFO, msg, ##args);
 
 #elif ENABLE_JB_TRACE == 2
-jbdie2
 #define JB_TRACE mpf_debug_output_trace
 #else
-jbdie3
 #define JB_TRACE mpf_null_trace
 #endif
 
