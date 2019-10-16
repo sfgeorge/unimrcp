@@ -121,6 +121,8 @@ mpf_jitter_buffer_t* mpf_jitter_buffer_create(mpf_jb_config_t *jb_config, mpf_co
 	jb->playout_delay_ts = jb->frame_ts * jb->config->initial_playout_delay / CODEC_FRAME_TIME_BASE;
 	jb->max_playout_delay_ts = jb->frame_ts * jb->config->max_playout_delay / CODEC_FRAME_TIME_BASE;
 
+	JB_TRACE("DBG JB mpf_jitter_buffer_create() produced frame_ts %d frame_size %d frame_count %d initial_playout_delay %d playout_delay_ts %d max_playout_delay_ts %d\n", jb->frame_ts, jb->frame_size, jb->frame_count, jb->config->initial_playout_delay, jb->playout_delay_ts, jb->max_playout_delay_ts);
+
 	jb->write_sync = 1;
 	jb->write_ts_offset = 0;
 	jb->write_ts = jb->read_ts = 0;
@@ -504,8 +506,13 @@ apt_bool_t mpf_jitter_buffer_read(mpf_jitter_buffer_t *jb, mpf_frame_t *media_fr
 apr_uint32_t mpf_jitter_buffer_playout_delay_get(const mpf_jitter_buffer_t *jb)
 {
 	if(jb->config->adaptive == 0) {
+		JB_TRACE("DBG JB mpf_jitter_buffer_playout_delay_get() returning non-adaptive %d\n", jb->config->initial_playout_delay);
+
 		return jb->config->initial_playout_delay;
 	}
 
-	return jb->playout_delay_ts * CODEC_FRAME_TIME_BASE / jb->frame_ts;
+	apr_uint32_t delay =
+	 jb->playout_delay_ts * CODEC_FRAME_TIME_BASE / jb->frame_ts;
+	JB_TRACE("DBG JB mpf_jitter_buffer_playout_delay_get() returning adaptive %d\n", delay);
+	return delay;
 }

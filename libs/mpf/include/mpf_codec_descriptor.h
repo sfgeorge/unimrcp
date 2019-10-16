@@ -26,6 +26,9 @@
 #include "apt_string.h"
 #include "mpf.h"
 
+#define DESC_TRACE(msg, args...) \
+  apt_log(MPF_LOG_MARK, APT_PRIO_INFO, msg, ##args);
+
 APT_BEGIN_EXTERN_C
 
 /** Codec frame time base in msec */
@@ -134,20 +137,29 @@ static APR_INLINE  mpf_codec_descriptor_t* mpf_codec_descriptor_create(apr_pool_
 /** Calculate encoded frame size in bytes */
 static APR_INLINE apr_size_t mpf_codec_frame_size_calculate(const mpf_codec_descriptor_t *descriptor, const mpf_codec_attribs_t *attribs)
 {
-	return (apr_size_t) descriptor->channel_count * attribs->bits_per_sample * CODEC_FRAME_TIME_BASE * 
+	apr_size_t size =
+	 (apr_size_t) descriptor->channel_count * attribs->bits_per_sample * CODEC_FRAME_TIME_BASE *
 			descriptor->sampling_rate / 1000 / 8; /* 1000 - msec per sec, 8 - bits per byte */
+	DESC_TRACE("DBG mpf_codec_frame_size_calculate() returned size %d from channel_count %d sampling_rate %d bits_per_sample %d\n", size, descriptor->channel_count, descriptor->sampling_rate, attribs->bits_per_sample);
+	return size;
 }
 
 /** Calculate samples of the frame (ts) */
 static APR_INLINE apr_size_t mpf_codec_frame_samples_calculate(const mpf_codec_descriptor_t *descriptor)
 {
-	return (apr_size_t) descriptor->channel_count * CODEC_FRAME_TIME_BASE * descriptor->sampling_rate / 1000;
+	apr_size_t size =
+	 (apr_size_t) descriptor->channel_count * CODEC_FRAME_TIME_BASE * descriptor->sampling_rate / 1000;
+	DESC_TRACE("DBG mpf_codec_frame_samples_calculate() returned size %d from channel_count %d sampling_rate %d\n", size, descriptor->channel_count, descriptor->sampling_rate);
+	return size;
 }
 
 /** Calculate linear frame size in bytes */
 static APR_INLINE apr_size_t mpf_codec_linear_frame_size_calculate(apr_uint16_t sampling_rate, apr_byte_t channel_count)
 {
-	return (apr_size_t) channel_count * BYTES_PER_SAMPLE * CODEC_FRAME_TIME_BASE * sampling_rate / 1000;
+	apr_size_t size =
+	 (apr_size_t) channel_count * BYTES_PER_SAMPLE * CODEC_FRAME_TIME_BASE * sampling_rate / 1000;
+	DESC_TRACE("DBG mpf_codec_linear_frame_size_calculate() returned size %d from channel_count %d sampling_rate %d\n", size, channel_count, sampling_rate);
+	return size;
 }
 
 
