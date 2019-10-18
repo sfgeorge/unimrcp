@@ -968,7 +968,7 @@ static APR_INLINE void rtp_header_prepare(
 static APR_INLINE apt_bool_t mpf_rtp_data_send(mpf_rtp_stream_t *rtp_stream, rtp_transmitter_t *transmitter, const mpf_frame_t *frame)
 {
 	RTP_TRACE("DBG3 mpf_rtp_data_send() entered with frame->codec_frame->size %d transmitter->ptime %d rtp_stream->settings->ptime %d\n",
-		(frame != NULL && frame->codec_frame != NULL ? frame->codec_frame.size : -1),
+		(frame != NULL ? frame->codec_frame.size : -1),
 		transmitter->ptime,
 		rtp_stream->settings->ptime
 		);
