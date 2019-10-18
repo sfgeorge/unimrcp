@@ -15,6 +15,7 @@
  */
 
 #include "mpf_frame_buffer.h"
+#include "apt_log.h"
 
 struct mpf_frame_buffer_t {
 	apr_byte_t         *raw_data;
@@ -137,6 +138,9 @@ apt_bool_t mpf_frame_buffer_write(mpf_frame_buffer_t *buffer, const mpf_frame_t 
 
 		data = (char*)data + buffer->frame_size;
 		size -= buffer->frame_size;
+
+		apt_log(APT_LOG_MARK, APT_PRIO_NOTICE, "DBG3 mpf_frame_buffer_write() writing packet with codec_frame.size %d and remaining buffer size of %d\n", write_frame->codec_frame.size, size);
+
 		buffer->write_pos ++;
 	}
 

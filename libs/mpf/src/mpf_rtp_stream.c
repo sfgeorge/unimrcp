@@ -212,6 +212,7 @@ static apt_bool_t mpf_rtp_stream_local_media_create(mpf_rtp_stream_t *rtp_stream
 	if(rtp_stream->settings->ptime) {
 		local_media->ptime = rtp_stream->settings->ptime;
 	}
+	RTP_TRACE("DBG3 mpf_rtp_stream_local_media_create() created local_media->ptime %d. rtp_stream->settings->ptime was %d\n", local_media->ptime, rtp_stream->settings->ptime);
 
 	if(mpf_codec_list_is_empty(&local_media->codec_list) == TRUE) {
 		if(mpf_codec_list_is_empty(&rtp_stream->settings->codec_list) == TRUE) {
@@ -322,6 +323,7 @@ static apt_bool_t mpf_rtp_stream_media_negotiate(mpf_rtp_stream_t *rtp_stream)
 
 	local_media->id = remote_media->id;
 	local_media->mid = remote_media->mid;
+	RTP_TRACE("DBG3 mpf_rtp_stream_media_negotiate() setting local_media->ptime %d = remote_media->ptime %d\n", local_media->ptime, remote_media->ptime);
 	local_media->ptime = remote_media->ptime;
 
 	if(rtp_stream->state == MPF_MEDIA_DISABLED && remote_media->state == MPF_MEDIA_ENABLED) {
@@ -899,6 +901,9 @@ static apt_bool_t mpf_rtp_tx_stream_open(mpf_audio_stream_t *stream, mpf_codec_t
 		return FALSE;
 	}
 
+	RTP_TRACE("DBG3 mpf_rtp_tx_stream_open() began with transmitter->ptime %d rtp_stream->settings->ptime %d\n",
+		transmitter->ptime,
+		(rtp_stream->settings ? rtp_stream->settings->ptime : -1));
 	if(!transmitter->ptime) {
 		if(rtp_stream->settings && rtp_stream->settings->ptime) {
 			transmitter->ptime = rtp_stream->settings->ptime;
@@ -962,6 +967,12 @@ static APR_INLINE void rtp_header_prepare(
 
 static APR_INLINE apt_bool_t mpf_rtp_data_send(mpf_rtp_stream_t *rtp_stream, rtp_transmitter_t *transmitter, const mpf_frame_t *frame)
 {
+	RTP_TRACE("DBG3 mpf_rtp_data_send() entered with frame->codec_frame->size %d transmitter->ptime %d rtp_stream->settings->ptime %d\n",
+		(frame != NULL && frame->codec_frame != NULL ? frame->codec_frame.size : -1),
+		transmitter->ptime,
+		rtp_stream->settings->ptime
+		);
+
 	apt_bool_t status = TRUE;
 	memcpy(
 		transmitter->packet_data + transmitter->packet_size,
