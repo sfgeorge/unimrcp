@@ -927,7 +927,7 @@ static apt_bool_t mpf_rtp_tx_stream_open(mpf_audio_stream_t *stream, mpf_codec_t
 			rtp_stream->rtp_l_sockaddr->hostname,
 			rtp_stream->rtp_l_sockaddr->port,
 			rtp_stream->rtp_r_sockaddr->hostname,
-			rtp_stream->rtp_r_sockaddr->port);
+			rtp_stream->rtp_r_sockaddr->port); # never invoked
 	return TRUE;
 }
 

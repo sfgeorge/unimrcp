@@ -94,7 +94,7 @@ mpf_jitter_buffer_t* mpf_jitter_buffer_create(mpf_jb_config_t *jb_config, mpf_co
 		jb_config->max_playout_delay = 2 * jb_config->initial_playout_delay;
 	}
 	if(jb_config->max_playout_delay == 0) {
-		jb_config->max_playout_delay = 600; /* ms */
+		jb_config->max_playout_delay = 600; /* ms # */
 	}
 	
 	jb->config = jb_config;
